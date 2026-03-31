@@ -2,16 +2,16 @@
 
 I'm a software engineer passionate about home automation, renewable energy systems, and IoT.
 
-## 🔋 Victron Venus OS Projects
+## 🔋 Victron Venus OS Projects [@victron-venus](https://github.com/victron-venus)
 
 Custom integrations and tools for Victron Energy systems running Venus OS:
 
 | Project | Description |
 |---------|-------------|
-| [inverter-control](https://github.com/4alvit/inverter-control) | Advanced ESS external control system with web dashboard |
-| [dbus-mqtt-battery](https://github.com/4alvit/dbus-mqtt-battery) | MQTT to D-Bus bridge for BMS integration |
-| [dbus-tasmota-pv](https://github.com/4alvit/dbus-tasmota-pv) | Tasmota smart plug as PV inverter on D-Bus |
-| [esphome-jbd-bms-mqtt](https://github.com/4alvit/esphome-jbd-bms-mqtt) | ESP32 Bluetooth monitor for JBD/Overkill BMS |
+| [inverter-control](https://github.com/victron-venus/inverter-control) | Advanced ESS external control system with web dashboard |
+| [dbus-mqtt-battery](https://github.com/victron-venus/dbus-mqtt-battery) | MQTT to D-Bus bridge for BMS integration |
+| [dbus-tasmota-pv](https://github.com/victron-venus/dbus-tasmota-pv) | Tasmota smart plug as PV inverter on D-Bus |
+| [esphome-jbd-bms-mqtt](https://github.com/victron-venus/esphome-jbd-bms-mqtt) | ESP32 Bluetooth monitor for JBD/Overkill BMS |
 
 ## 🏠 Home Assistant
 
