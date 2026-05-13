@@ -9,7 +9,10 @@ Custom integrations and tools for Victron Energy systems running Venus OS:
 | Project | Description |
 |---------|-------------|
 | [inverter-control](https://github.com/victron-venus/inverter-control) | Advanced ESS external control system with web dashboard |
-| [dbus-mqtt-battery](https://github.com/victron-venus/dbus-mqtt-battery) | MQTT to D-Bus bridge for BMS integration |
+| [inverter-dashboard](https://github.com/victron-venus/inverter-dashboard) | Real-time web dashboard for monitoring Victron inverter systems via MQTT |
+| [inverter-desktop](https://github.com/victron-venus/inverter-desktop) | Desktop application for monitoring Victron inverter systems |
+| [inverter-monitoring](https://github.com/victron-venus/inverter-monitoring) | Telegraf + InfluxDB + Grafana monitoring stack for Victron systems |
+| [dbus-mqtt-battery](https://github.com/victron-venus/dbus-mqtt-battery) | MQTT to D-Bus bridge for JBD BMS batteries via ESP32 |
 | [dbus-tasmota-pv](https://github.com/victron-venus/dbus-tasmota-pv) | Tasmota smart plug as PV inverter on D-Bus |
 | [esphome-jbd-bms-mqtt](https://github.com/victron-venus/esphome-jbd-bms-mqtt) | ESP32 Bluetooth monitor for JBD/Overkill BMS |
 
