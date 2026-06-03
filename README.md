@@ -52,9 +52,15 @@ graph TD
 
 ### [Inverter Dashboard (Go)](https://github.com/victron-venus/inverter-dashboard-go) & [(Python)](https://github.com/victron-venus/inverter-dashboard)
 **Real-time Energy Observability**
-- Built a high-performance monitoring interface with WebSocket-based live updates.
+- Built high-performance monitoring interfaces with WebSocket-based live updates.
 - The **Go** version provides a single-binary deployment with sub-10ms latency and minimal memory footprint.
 - **Tech:** Go, FastAPI, Vue.js, WebSockets, Docker.
+
+### [Inverter Desktop](https://github.com/victron-venus/inverter-desktop)
+**Cross-Platform Monitoring Suite**
+- Developed a native desktop application using **Tauri** and **Rust** for low-resource system monitoring.
+- Implemented secure MQTT communication with built-in security auditing and fuzz testing (OSS-Fuzz).
+- **Tech:** Rust, Tauri, TypeScript, Vite.
 
 ### [ESPHome JBD BMS Monitor](https://github.com/victron-venus/esphome-jbd-bms-mqtt) & [dbus-mqtt-battery](https://github.com/victron-venus/dbus-mqtt-battery)
 **Embedded Battery Management Bridge**
@@ -90,8 +96,13 @@ graph TD
 ## 📈 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=4alvit&show_icons=true&theme=dark&hide_border=true&count_private=true" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=4alvit&layout=compact&theme=dark&hide_border=true" alt="Top Languages" />
+  <a href="https://github.com/4alvit">
+    <img src="https://github-readme-stats.vercel.app/api?username=4alvit&show_icons=true&theme=dark&hide_border=true&count_private=true" alt="GitHub Stats" />
+  </a>
+  <br>
+  <a href="https://github.com/4alvit">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=4alvit&layout=compact&theme=dark&hide_border=true" alt="Top Languages" />
+  </a>
 </p>
 
 ## 📫 Let's Connect
