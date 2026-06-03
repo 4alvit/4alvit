@@ -93,18 +93,6 @@ graph TD
 
 ---
 
-## 📈 GitHub Stats
-
-<p align="center">
-  <a href="https://github.com/4alvit">
-    <img src="https://github-readme-stats.vercel.app/api?username=4alvit&show_icons=true&theme=radical" alt="GitHub Stats" />
-  </a>
-  <br>
-  <a href="https://github.com/4alvit">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=4alvit&layout=compact&theme=radical" alt="Top Languages" />
-  </a>
-</p>
-
 ## 📫 Let's Connect
 - **GitHub:** [@4alvit](https://github.com/4alvit)
 - **Organization:** [@victron-venus](https://github.com/victron-venus)
