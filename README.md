@@ -68,6 +68,12 @@ graph TD
 - Developed the D-Bus bridge that dynamically registers multiple battery chains as native Victron devices.
 - **Tech:** C++ (ESPHome), Python, BLE, MQTT.
 
+### [Inverter Monitoring Stack](https://github.com/victron-venus/inverter-monitoring)
+**System Observability & Time-Series Data**
+- Deployed a comprehensive **TIG (Telegraf, InfluxDB, Grafana)** stack for long-term telemetry storage and visualization.
+- Implemented automated log shipping with Loki and GitHub webhook-based auto-deployment for the monitoring infrastructure.
+- **Tech:** Docker, Telegraf, InfluxDB, Grafana, Loki.
+
 ### [Terraform GitHub Infrastructure](https://github.com/victron-venus/terraform-github)
 **Infrastructure as Code**
 - Manages the entire `victron-venus` organization, including 10+ repositories, branch protections, and CI/CD secrets.
