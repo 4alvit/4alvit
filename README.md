@@ -74,7 +74,7 @@ graph TD
 - Implemented automated log shipping with Loki and GitHub webhook-based auto-deployment for the monitoring infrastructure.
 - **Tech:** Docker, Telegraf, InfluxDB, Grafana, Loki.
 
-### [Terraform GitHub Infrastructure](https://github.com/victron-venus/terraform-github)
+### [Terraform GitHub Infrastructure](https://github.com/4alvit/terraform-github-victron)
 **Infrastructure as Code**
 - Manages the entire `victron-venus` organization, including 10+ repositories, branch protections, and CI/CD secrets.
 - **Tech:** Terraform, GitHub Actions, HCL.
