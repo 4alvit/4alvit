@@ -17,7 +17,20 @@ I specialize in building robust, low-latency control systems and monitoring stac
 My project suite forms a complete ecosystem for home energy management:
 
 ```mermaid
-graph LR
+graph TD
+    subgraph Data["Data & Analytics"]
+        direction LR
+        RAG[energy-data-rag-pipeline] -->|RAG pipeline| DOCS[Victron docs + community]
+        SF[solar-forecast-langgraph] -->|Forecast + LangGraph| MQTT
+    end
+
+    subgraph Bridge["Bridge Services"]
+        direction LR
+        ESP -.->|BLE → MQTT| ESPH[esphome-jbd-bms-mqtt]
+        FG[fastapi-mqtt-gateway] -.->|REST/WS → MQTT| MQTT[MQTT Broker]
+        MO[mqtt-observability-opentelemetry] -.->|OTel → metrics/traces| MQTT
+    end
+
     subgraph Hardware["Hardware Layer"]
         direction LR
         BMS[JBD BMS / LiFePO4] -- BLE --- ESP[ESP32 / ESPHome]
@@ -37,13 +50,6 @@ graph LR
         OBS[venus-os-observability] -- OTel tracing --- VIC
     end
 
-    subgraph Bridge["Bridge Services"]
-        direction LR
-        ESP -.->|BLE → MQTT| ESPH[esphome-jbd-bms-mqtt]
-        FG[fastapi-mqtt-gateway] -.->|REST/WS → MQTT| MQTT[MQTT Broker]
-        MO[mqtt-observability-opentelemetry] -.->|OTel → metrics/traces| MQTT
-    end
-
     subgraph UI["Monitoring & UI"]
         direction LR
         IC -- MQTT --- MQTT
@@ -55,11 +61,11 @@ graph LR
         MQTT --> MCP[mcp-venus-os]
     end
 
-    subgraph Data["Data & Analytics"]
-        direction LR
-        RAG[energy-data-rag-pipeline] -->|RAG pipeline| DOCS[Victron docs + community]
-        SF[solar-forecast-langgraph] -->|Forecast + LangGraph| MQTT
-    end
+    %% Invisible edges to force vertical stack order
+    Data -.-> Bridge
+    Bridge -.-> Hardware
+    Hardware -.-> Control
+    Control -.-> UI
 ```
 
 ---
