@@ -30,13 +30,37 @@ graph TD
         BM -- D-Bus --- VIC
         TV -- D-Bus --- VIC
         IC[inverter-control] -- D-Bus --- VIC
+        EL[dbus-event-log] -- D-Bus monitor --- VIC
+        GOV[venus-os-governance] -- Policy engine --- VIC
+        OBS[venus-os-observability] -- OTel tracing --- VIC
+    end
+
+    subgraph "Bridge Services"
+        ESP -.->|BLE → MQTT| ESPH[esphome-jbd-bms-mqtt]
+        FG[fastapi-mqtt-gateway] -.->|REST/WS → MQTT| MQTT[MQTT Broker]
+        MO[mqtt-observability-opentelemetry] -.->|OTel → metrics/traces| MQTT
     end
 
     subgraph "Monitoring & UI"
-        IC -- MQTT --- DB_PY[Python Dashboard]
-        IC -- MQTT --- DB_GO[Go Dashboard]
-        IC -- MQTT --- DB_DT[Desktop App / Tauri]
-        VIC -- MQTT --- GRAF[TIG Stack / Grafana]
+        IC -- MQTT --- MQTT
+        MQTT --> DGO[inverter-dashboard-go]
+        MQTT --> DPY[inverter-dashboard]
+        MQTT --> DVUE[inverter-dashboard-vue]
+        MQTT --> DT[inverter-desktop]
+        MQTT --> MON[inverter-monitoring]
+        MQTT --> MCP[mcp-venus-os]
+    end
+
+    subgraph "Data & Analytics"
+        RAG[energy-data-rag-pipeline] -->|RAG pipeline| DOCS[Victron docs + community]
+        SF[solar-forecast-langgraph] -->|Forecast + LangGraph| MQTT
+    end
+
+    subgraph "Dev & Ops"
+        IT[integration-tests]
+        TFV[terraform-github-victron]
+        TF4[terraform-github-4alvit]
+        BUILD[iot-project-builder-profile]
     end
 ```
 
@@ -74,9 +98,70 @@ graph TD
 - Implemented automated log shipping with Loki and GitHub webhook-based auto-deployment for the monitoring infrastructure.
 - **Tech:** Docker, Telegraf, InfluxDB, Grafana, Loki.
 
-### [Terraform GitHub Infrastructure](https://github.com/4alvit/terraform-github-victron)
-**Infrastructure as Code**
-- Manages the entire `victron-venus` organization, including 10+ repositories, branch protections, and CI/CD secrets.
+### [New: Venus OS Governance](https://github.com/victron-venus/venus-os-governance)
+**Policy Engine with Approval Gates**
+- Policy engine for Venus OS with SOC limits, charge/discharge rules, inverter control policies.
+- Audit logging via dbus-event-log with approval workflows for critical operations.
+- **Tech:** Python, D-Bus, MQTT, Policy-as-Code.
+
+### [New: Venus OS Observability](https://github.com/victron-venus/venus-os-observability)
+**OpenTelemetry/Prometheus Observability Stack**
+- D-Bus event tracing, inverter metrics export, distributed tracing across MQTT → D-Bus → inverter-control pipeline.
+- **Tech:** OpenTelemetry, Prometheus, Grafana, D-Bus.
+
+### [New: Energy Data RAG Pipeline](https://github.com/victron-venus/energy-data-rag-pipeline)
+**RAG Pipeline for Victron Knowledge**
+- Retrieval-Augmented Generation for Victron Energy documentation and community knowledge.
+- Built with FastAPI, LangChain, pgvector, and PostgreSQL.
+- **Tech:** Python, FastAPI, LangChain, pgvector, PostgreSQL.
+
+### [New: Solar Forecast LangGraph](https://github.com/4alvit/solar-forecast-langgraph)
+**Solar Forecasting with LangGraph**
+- Advanced solar forecasting using LangGraph for multi-step reasoning and tool use.
+- **Tech:** Python, LangGraph, LangChain, FastAPI.
+
+### [New: IoT Project Builder Profile](https://github.com/victron-venus/iot-project-builder-profile)
+**Automated Engineering Profile Generator**
+- Analyzes GitHub repositories, ESPHome configurations, and D-Bus services to generate comprehensive engineering profiles.
+- **Tech:** Python, GitHub API, GraphQL, Jinja2.
+
+### [New: MCP Venus OS](https://github.com/victron-venus/mcp-venus-os)
+**MCP Server for Venus OS Management**
+- Model Context Protocol server for reading and controlling Venus OS devices via D-Bus and MQTT.
+- **Tech:** Python, MCP, D-Bus, MQTT.
+
+### [New: FastAPI MQTT Gateway](https://github.com/victron-venus/fastapi-mqtt-gateway)
+**Production-Ready REST/WebSocket → MQTT Bridge**
+- Authentication, rate limiting, and real-time streaming capabilities.
+- **Tech:** FastAPI, MQTT, WebSockets, JWT.
+
+### [New: MQTT Observability OpenTelemetry](https://github.com/victron-venus/mqtt-observability-opentelemetry)
+**Complete Observability Stack for MQTT IoT Systems**
+- **Tech:** OpenTelemetry, Prometheus, Grafana, MQTT.
+
+### [New: D-Bus Event Log](https://github.com/victron-venus/dbus-event-log)
+**Audit Log for D-Bus Commands & State Transitions**
+- Captures all D-Bus signals, method calls, and service lifecycle events on Victron Energy systems.
+- Critical for post-mortem analysis of incidents (overloads, battery failures, communication issues).
+- **Tech:** Python, D-Bus, SQLite/TimescaleDB, MQTT.
+
+### [New: D-Bus Service Template](https://github.com/victron-venus/dbus-service-template)
+**Copier Template for New D-Bus Services**
+- Template for generating new D-Bus services with best practices.
+- **Tech:** Python, Copier, D-Bus.
+
+### [New: ESPHome BLE Sensor Patterns](https://github.com/victron-venus/esphome-ble-sensor-patterns)
+**Reference Library of Production-Ready ESPHome Configurations**
+- Extracted from real deployments monitoring 8+ JBD BMS units, Daly BMS, and various temperature/plant sensors.
+- **Tech:** ESPHome, C++, YAML, BLE.
+
+### [New: Integration Tests](https://github.com/victron-venus/integration-tests)
+**MQTT / Battery / PV Integration Test Harness**
+- **Tech:** Python, pytest, MQTT, D-Bus simulation.
+
+### [New: Terraform GitHub Infrastructure](https://github.com/victron-venus/terraform-github-victron)
+**Infrastructure as Code for victron-venus Organization**
+- Manages the entire `victron-venus` organization, including 20+ repositories, branch protections, and CI/CD secrets.
 - **Tech:** Terraform, GitHub Actions, HCL.
 
 ---
@@ -100,5 +185,6 @@ graph TD
 ---
 
 ## 📫 Let's Connect
+
 - **GitHub:** [@4alvit](https://github.com/4alvit)
 - **Organization:** [@victron-venus](https://github.com/victron-venus)
