@@ -51,18 +51,22 @@ graph LR
         MQTT --> MCP[mcp-venus-os]
     end
 
-    subgraph "Data & Analytics"
+    subgraph Data["Data & Analytics"]
         RAG[energy-data-rag-pipeline] -->|RAG pipeline| DOCS[Victron docs + community]
         SF[solar-forecast-langgraph] -->|Forecast + LangGraph| MQTT
     end
-
-    subgraph "Dev & Ops"
-        IT[integration-tests]
-        TFV[terraform-github-victron]
-        TF4[terraform-github-4alvit]
-        BUILD[iot-project-builder-profile]
-    end
 ```
+
+---
+
+### Dev & Ops
+
+| Repository | Role |
+|------------|------|
+| [integration-tests](https://github.com/victron-venus/integration-tests) | MQTT / battery / PV integration test harness |
+| [terraform-github-victron](https://github.com/victron-venus/terraform-github-victron) | Terraform IaC for victron-venus org |
+| [terraform-github-4alvit](https://github.com/4alvit/terraform-github-4alvit) | Terraform IaC for personal 4alvit account |
+| [iot-project-builder-profile](https://github.com/victron-venus/iot-project-builder-profile) | Auto engineering profile generator from GitHub activity |
 
 ---
 
