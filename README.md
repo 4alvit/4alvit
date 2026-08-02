@@ -19,12 +19,14 @@ My project suite forms a complete ecosystem for home energy management:
 ```mermaid
 graph LR
     subgraph Hardware["Hardware Layer"]
+        direction LR
         BMS[JBD BMS / LiFePO4] -- BLE --- ESP[ESP32 / ESPHome]
         TP[Tasmota Plug] -- HTTP --- PV[PV Inverter]
         VIC[Victron MultiPlus/Cerbo]
     end
 
     subgraph Control["Control Layer (Venus OS)"]
+        direction LR
         ESP -- MQTT --- BM[dbus-mqtt-battery]
         TP -- HTTP --- TV[dbus-tasmota-pv]
         BM -- D-Bus --- VIC
@@ -36,12 +38,14 @@ graph LR
     end
 
     subgraph Bridge["Bridge Services"]
+        direction LR
         ESP -.->|BLE → MQTT| ESPH[esphome-jbd-bms-mqtt]
         FG[fastapi-mqtt-gateway] -.->|REST/WS → MQTT| MQTT[MQTT Broker]
         MO[mqtt-observability-opentelemetry] -.->|OTel → metrics/traces| MQTT
     end
 
     subgraph UI["Monitoring & UI"]
+        direction LR
         IC -- MQTT --- MQTT
         MQTT --> DGO[inverter-dashboard-go]
         MQTT --> DPY[inverter-dashboard]
@@ -52,6 +56,7 @@ graph LR
     end
 
     subgraph Data["Data & Analytics"]
+        direction LR
         RAG[energy-data-rag-pipeline] -->|RAG pipeline| DOCS[Victron docs + community]
         SF[solar-forecast-langgraph] -->|Forecast + LangGraph| MQTT
     end
