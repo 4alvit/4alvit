@@ -17,14 +17,14 @@ I specialize in building robust, low-latency control systems and monitoring stac
 My project suite forms a complete ecosystem for home energy management:
 
 ```mermaid
-graph TD
-    subgraph "Hardware Layer"
+graph LR
+    subgraph Hardware["Hardware Layer"]
         BMS[JBD BMS / LiFePO4] -- BLE --- ESP[ESP32 / ESPHome]
         TP[Tasmota Plug] -- HTTP --- PV[PV Inverter]
         VIC[Victron MultiPlus/Cerbo]
     end
 
-    subgraph "Control Layer (Venus OS)"
+    subgraph Control["Control Layer (Venus OS)"]
         ESP -- MQTT --- BM[dbus-mqtt-battery]
         TP -- HTTP --- TV[dbus-tasmota-pv]
         BM -- D-Bus --- VIC
@@ -35,13 +35,13 @@ graph TD
         OBS[venus-os-observability] -- OTel tracing --- VIC
     end
 
-    subgraph "Bridge Services"
+    subgraph Bridge["Bridge Services"]
         ESP -.->|BLE → MQTT| ESPH[esphome-jbd-bms-mqtt]
         FG[fastapi-mqtt-gateway] -.->|REST/WS → MQTT| MQTT[MQTT Broker]
         MO[mqtt-observability-opentelemetry] -.->|OTel → metrics/traces| MQTT
     end
 
-    subgraph "Monitoring & UI"
+    subgraph UI["Monitoring & UI"]
         IC -- MQTT --- MQTT
         MQTT --> DGO[inverter-dashboard-go]
         MQTT --> DPY[inverter-dashboard]
