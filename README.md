@@ -46,7 +46,7 @@ graph TD
         TV -- D-Bus --- VIC
         IC[inverter-control] -- D-Bus --- VIC
         EL[dbus-event-log] -- D-Bus monitor --- VIC
-        GOV[venus-os-governance] -- Policy engine --- VIC
+        GOV["venus-os-governance (archived)"] -- Policy engine --- VIC
         OBS[venus-os-observability] -- OTel tracing --- VIC
     end
 
@@ -113,11 +113,12 @@ graph TD
 - Implemented automated log shipping with Loki and GitHub webhook-based auto-deployment for the monitoring infrastructure.
 - **Tech:** Docker, Telegraf, InfluxDB, Grafana, Loki.
 
-### [New: Venus OS Governance](https://github.com/victron-venus/venus-os-governance)
+### [Venus OS Governance (Archived)](https://github.com/victron-venus/venus-os-governance)
 **Policy Engine with Approval Gates**
 - Policy engine for Venus OS with SOC limits, charge/discharge rules, inverter control policies.
 - Audit logging via dbus-event-log with approval workflows for critical operations.
 - **Tech:** Python, D-Bus, MQTT, Policy-as-Code.
+- **Status:** 🗄️ Archived 2026-08 — superseded by inverter-control built-in safety (DVCC SOC limits, watchdog failsafe).
 
 ### [New: Venus OS Observability](https://github.com/victron-venus/venus-os-observability)
 **OpenTelemetry/Prometheus Observability Stack**
