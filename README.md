@@ -1,80 +1,59 @@
 # Hi — Software Engineer & IoT Architect
 
-Low-latency control and monitoring for renewable energy and home automation,
-focused on the **Victron Energy** / Venus OS stack: bridges between industrial
-hardware, MQTT, D-Bus, and modern dashboards.
+I build **connectivity fabric** for heterogeneous systems: discovery, routing,
+policy, and observability across devices that were never designed to talk to
+each other. Day job energy is Victron / Venus OS; the same shape shows up as
+service mesh at cloud scale — a paved road so apps (and hardware) do not have
+to invent networking themselves.
 
-Also maintains **[open-ott-play](https://github.com/open-ott-play)** — FOSS IPTV/OTT
-player (TypeScript → one ES5 bundle + Rust server).
+Two product lines on GitHub: **[victron-venus](https://github.com/victron-venus)**
+(energy / Venus OS fabric) and **[open-ott-play](https://github.com/open-ott-play)**
+(IPTV/OTT player + Rust edge server).
 
 ## Expertise
 
-- **Systems** — Python control loops; Go / Rust services
-- **Embedded & IoT** — ESPHome, BLE proxies, MQTT
-- **Energy** — ESS / grid-zero, split-phase, battery protection
-- **Observability** — live dashboards (Go, Vue, Tauri) + TIG / OpenTelemetry
+- **Distributed glue** — MQTT / D-Bus / BLE bridges; gateways; control vs data plane
+- **Reliability** — failsafe control loops, audit logs, on-call style ops for home ESS
+- **Systems** — Python control; Go / Rust services; ESPHome on the edge
+- **Media / edge** — ES5-safe STB UI; Rust reverse-proxy style server for EPG and streams
+- **Observability** — live dashboards + TIG / OpenTelemetry across the stack
 - **IaC** — GitHub orgs and repos via Terraform
 
 ---
 
 ## Architecture
 
-Compact stack view (top → bottom). Full repos are linked below.
+One column, top → bottom: producers → fabric → consumers.
 
 ```mermaid
-%%{init: {"flowchart": {"nodeSpacing": 12, "rankSpacing": 28, "padding": 8}}}%%
 flowchart TB
-  subgraph data [Data]
-    RAG[energy-data-rag]
-    SF[solar-forecast]
-  end
+  RAG[energy-data-rag] --> MQTT
+  SF[solar-forecast] --> MQTT
+  FG[fastapi-mqtt-gateway] --> MQTT
+  ESPH[esphome-jbd-bms] --> MQTT
+  MO[mqtt-otel] --> MQTT
 
-  subgraph bridge [Bridges]
-    FG[fastapi-mqtt-gw]
-    ESPH[esphome-jbd-bms]
-    MO[mqtt-otel]
-  end
-
-  subgraph hw [Hardware]
-    BMS[JBD BMS] --- ESP[ESP32]
-    TP[Tasmota] --- PV[PV]
-    VIC[MultiPlus / Cerbo]
-  end
-
-  subgraph ctl [Venus OS / D-Bus]
-    BM[dbus-mqtt-battery]
-    TV[dbus-tasmota-pv]
-    IC[inverter-control]
-    EL[dbus-event-log]
-    OBS[venus-os-otel]
-  end
-
-  subgraph ui [UI / MQTT consumers]
-    MQTT((MQTT))
-    DGO[dashboard-go]
-    DT[inverter-desktop]
-    MON[monitoring]
-    MCP[mcp-venus-os]
-  end
-
-  RAG --> MQTT
-  SF --> MQTT
-  FG --> MQTT
-  ESPH --> MQTT
-  MO --> MQTT
-
-  ESP --> BM --> VIC
-  TP --> TV --> VIC
-  IC --> VIC
-  EL --> VIC
-  OBS --> VIC
+  BMS[JBD BMS] --> ESP[ESP32 / ESPHome]
+  ESP --> BM[dbus-mqtt-battery]
+  TP[Tasmota PV] --> TV[dbus-tasmota-pv]
+  BM --> VIC[MultiPlus / Cerbo]
+  TV --> VIC
+  IC[inverter-control] --> VIC
+  EL[dbus-event-log] --> VIC
+  OBS[venus-os-otel] --> VIC
   IC --> MQTT
 
-  MQTT --> DGO
-  MQTT --> DT
-  MQTT --> MON
-  MQTT --> MCP
+  MQTT((MQTT fabric))
+  MQTT --> DGO[dashboard-go]
+  MQTT --> DT[inverter-desktop]
+  MQTT --> MON[monitoring]
+  MQTT --> MCP[mcp-venus-os]
 ```
+
+**Why this exists:** Venus OS, ESP nodes, and dashboards are different runtimes.
+The suite is the mesh between them — injection points (bridges), traffic into a
+shared bus (MQTT), locality (on-device D-Bus), policy (inverter-control), and
+telemetry (OTel / TIG) — so nothing speaks a private protocol forever.
 
 ### Dev & ops
 
@@ -87,7 +66,22 @@ flowchart TB
 
 ---
 
-## Featured projects
+## open-ott-play
+
+### [ottplay-foss](https://github.com/open-ott-play/ottplay-foss)
+
+Self-hosted IPTV/OTT player for smart TVs and STBs (MAG, Dune, Tizen, webOS, …)
+plus a local Rust HTTP(S) server.
+
+- **Client** — TypeScript → one ES5 classic bundle (`dist/stbPlayer.js`), `window.*` for legacy `prov.js` / device `stb.js`
+- **Server** — `ottplay-server` (axum): static files, XMLTV/EPG cache, M3U match, CORS stream proxy, optional TLS
+- **Ops** — multi-arch Docker Hub images; local HTTPS stack for day-to-day bring-up
+- **Org** — [open-ott-play](https://github.com/open-ott-play) profile + community files
+
+---
+
+## Featured projects (Victron)
+
 
 ### Control & bridges
 
