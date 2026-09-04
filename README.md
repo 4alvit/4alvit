@@ -23,8 +23,6 @@ Two product lines on GitHub: **[victron-venus](https://github.com/victron-venus)
 
 ## Architecture
 
-Strict vertical stack (one node per row — no side-by-side fan-in).
-
 ```mermaid
 flowchart TB
   HW["Hardware — JBD BMS · Tasmota · MultiPlus/Cerbo"]
