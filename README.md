@@ -23,31 +23,20 @@ Two product lines on GitHub: **[victron-venus](https://github.com/victron-venus)
 
 ## Architecture
 
-One column, top → bottom: producers → fabric → consumers.
+Strict vertical stack (one node per row — no side-by-side fan-in).
 
 ```mermaid
 flowchart TB
-  RAG[energy-data-rag] --> MQTT
-  SF[solar-forecast] --> MQTT
-  FG[fastapi-mqtt-gateway] --> MQTT
-  ESPH[esphome-jbd-bms] --> MQTT
-  MO[mqtt-otel] --> MQTT
+  HW["Hardware — JBD BMS · Tasmota · MultiPlus/Cerbo"]
+  EDGE["Edge — ESPHome / BLE proxy"]
+  BR["Bridges — dbus-mqtt-battery · dbus-tasmota-pv"]
+  CTL["Control & audit — inverter-control · dbus-event-log · venus-os-otel"]
+  BUS(("MQTT fabric"))
+  GW["Ingress & OTel — fastapi-mqtt-gateway · mqtt-otel"]
+  DATA["Data — energy-data-rag · solar-forecast"]
+  UI["Consumers — dashboard-go · desktop · monitoring · mcp-venus-os"]
 
-  BMS[JBD BMS] --> ESP[ESP32 / ESPHome]
-  ESP --> BM[dbus-mqtt-battery]
-  TP[Tasmota PV] --> TV[dbus-tasmota-pv]
-  BM --> VIC[MultiPlus / Cerbo]
-  TV --> VIC
-  IC[inverter-control] --> VIC
-  EL[dbus-event-log] --> VIC
-  OBS[venus-os-otel] --> VIC
-  IC --> MQTT
-
-  MQTT((MQTT fabric))
-  MQTT --> DGO[dashboard-go]
-  MQTT --> DT[inverter-desktop]
-  MQTT --> MON[monitoring]
-  MQTT --> MCP[mcp-venus-os]
+  HW --> EDGE --> BR --> CTL --> BUS --> GW --> DATA --> UI
 ```
 
 **Why this exists:** Venus OS, ESP nodes, and dashboards are different runtimes.
