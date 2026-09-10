@@ -10,6 +10,16 @@ Two product lines on GitHub: **[victron-venus](https://github.com/victron-venus)
 (energy / Venus OS fabric) and **[open-ott-play](https://github.com/open-ott-play)**
 (IPTV/OTT player + Rust edge server).
 
+
+## Live demos
+
+Two public surfaces that sit **on top of** the repos — not replacements for them:
+
+| Demo | What you get | Why it is here |
+|------|----------------|----------------|
+| [IoT builder profile](https://4alvit.github.io/iot-project-builder-profile/) | Auto-scored engineering profile from public GitHub IoT activity (focus areas, stack radar, org coverage) | Shows the **meta** side of the work: how the suite reads as a coherent builder profile, regenerated from the same repos listed below |
+| [Inverter web vitrine](https://inverter.alvit.here.now/) | Live read-only Victron status (PV / battery / grid) | Proof that the fabric can **safely expose** plant data on the public web: browser → edge proxy → [`inverter-gateway`](https://github.com/victron-venus/inverter-gateway) behind Cloudflare Access — no inbound ports, no secrets in the page. Source: [`inverter-web-vitrine`](https://github.com/victron-venus/inverter-web-vitrine) |
+
 ## Expertise
 
 - **Distributed glue** — MQTT / D-Bus / BLE bridges; gateways; control vs data plane
@@ -49,7 +59,7 @@ telemetry (OTel / TIG) — so nothing speaks a private protocol forever.
 | [integration-tests](https://github.com/victron-venus/integration-tests) | MQTT / battery / PV harness |
 | [terraform-github-victron](https://github.com/victron-venus/terraform-github-victron) | IaC for `victron-venus` |
 | [terraform-github-4alvit](https://github.com/4alvit/terraform-github-4alvit) | IaC for personal account |
-| [iot-project-builder-profile](https://github.com/victron-venus/iot-project-builder-profile) | Profile generator from GitHub activity |
+| [iot-project-builder-profile](https://github.com/4alvit/iot-project-builder-profile) | Profile generator from GitHub activity → [live Pages](https://4alvit.github.io/iot-project-builder-profile/) |
 
 ---
 
@@ -85,6 +95,8 @@ plus a local Rust HTTP(S) server.
 | Project | What it does |
 |---------|----------------|
 | [inverter-dashboard-go](https://github.com/victron-venus/inverter-dashboard-go) | Single-binary live dashboard |
+| [inverter-gateway](https://github.com/victron-venus/inverter-gateway) | Remote HTTPS API over Cerbo MQTT (Access / tunnel) |
+| [inverter-web-vitrine](https://github.com/victron-venus/inverter-web-vitrine) | Public read-only status page ([live](https://inverter.alvit.here.now/)) |
 | [inverter-dashboard](https://github.com/victron-venus/inverter-dashboard) | FastAPI / Python dashboard |
 | [inverter-desktop](https://github.com/victron-venus/inverter-desktop) | Tauri + Rust desktop app |
 | [inverter-monitoring](https://github.com/victron-venus/inverter-monitoring) | TIG + Loki stack |
