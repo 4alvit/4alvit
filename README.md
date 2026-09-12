@@ -11,6 +11,12 @@ Two product lines on GitHub: **[victron-venus](https://github.com/victron-venus)
 (IPTV/OTT player + Rust edge server).
 
 
+<!-- ci-release-process:start -->
+## CI and deployment
+
+See [CI and deployment workflow](docs/release-workflow.md) for required checks and local commands. This repository uses validation-only policy; application release channels do not apply.
+<!-- ci-release-process:end -->
+
 ## Live demos
 
 Two public surfaces that sit **on top of** the repos — not replacements for them:
