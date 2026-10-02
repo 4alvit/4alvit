@@ -18,6 +18,7 @@ python3 scripts/release.py status
 Callable validation workflows:
 - `.github/workflows/validate.yml`
 - `.github/workflows/codeql.yml`
+- `.github/workflows/workflow-validation.yml`
 
 ## Nightly validation and deployment
 

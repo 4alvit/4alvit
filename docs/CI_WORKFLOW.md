@@ -22,7 +22,7 @@ gh run list --workflow quality-gate.yml
 
 No beta, RC or stable application release is synthesized from configuration or
 reference source. Disabled legacy publisher entry points only explain this
-migration. Their exact previous contents remain in `docs/legacy-workflows/`.
+migration; prior workflow snapshots are not retained under `docs/` in this tree.
 Production deployment, where provided, requires manual dispatch from the default
 branch and the `production` environment; validation never deploys resources.
 
