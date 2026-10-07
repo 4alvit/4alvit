@@ -2,11 +2,7 @@
   "repository": "4alvit/4alvit",
   "mode": "validation-only",
   "default_branch": "main",
-  "validation_workflows": [
-    "validate.yml",
-    "codeql.yml",
-    "workflow-validation.yml"
-  ],
+  "validation_workflows": ["validate.yml", "codeql.yml", "workflow-validation.yml", "dependency-review.yml"],
   "local_checks": [
     "bash scripts/ci.sh"
   ],
