@@ -14,7 +14,7 @@ timeouts, immutable action references and a consistent CodeQL release.
 
 The callable workflows are:
 
-- `validate.yml`: source syntax, actionlint semantics and validator regressions.
+- `validate.yml`: Python E9/F lint, source syntax, actionlint semantics and validator regressions.
 - `codeql.yml`: separate Python and GitHub Actions analyses.
 - `workflow-validation.yml`: actionlint checks for automation entry points.
 - `dependency-review.yml`: pull-request dependency review.
@@ -26,7 +26,7 @@ regressions cover ignored files, symlinks, YAML tags and safe error messages.
 ## Local validation
 
 Follow [Contributing](../CONTRIBUTING.md) to install Python 3.12+, the hash-locked
-parser and actionlint. Run `bash scripts/ci.sh` to execute the local checks. The
+parser, Ruff and actionlint. Run `bash scripts/ci.sh` to execute the local checks. The
 vendored client can also invoke the policy's local check command:
 
 ```sh

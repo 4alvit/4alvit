@@ -21,3 +21,8 @@ Validation requires no production credentials and does not deploy or control
 hardware. Workflow references must use immutable commits or image digests;
 parser dependencies use checked hashes. Source parsing does not instantiate YAML
 objects. Never add tokens, private keys or local device configuration to the repo.
+
+The local validation commands do not implement cryptography. The shared client's
+network `status` operation delegates to GitHub CLI; use the
+[verified helper TLS profile](docs/HELPER_TLS_PROFILE.md) to retain certificate
+verification and disable smaller keys for that operation.

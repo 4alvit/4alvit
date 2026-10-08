@@ -22,11 +22,11 @@ environment, then run:
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
-python3 -m pip install --require-hashes --only-binary=:all: -r .github/requirements-workflow-contracts.txt
+python3 -m pip install --require-hashes --only-binary=:all: -r .github/requirements-workflow-contracts.txt -r .github/requirements-lint.txt
 bash scripts/ci.sh
 ```
 
-The local command parses tracked and nonignored source/configuration files,
+The local command checks Python for syntax/name/import errors (Ruff E9/F), then parses tracked and nonignored source/configuration files,
 validates workflow semantics with actionlint, checks immutable action references
 and consistent CodeQL releases, and runs the unittest regressions. YAML is parsed
 without constructing tagged Python objects. CI separately runs CodeQL for both
@@ -37,3 +37,6 @@ No application is built or deployed here; successful syntax/contract checks do
 not demonstrate behavior of the linked hardware or services. Git commits identify
 profile and validator changes. This repository uses a validation-only policy and
 has no application package release process.
+
+See [validation interfaces](docs/VALIDATION_INTERFACE.md) for inputs, outputs,
+exit statuses and the profile's continuous-delivery/source-identity model.
