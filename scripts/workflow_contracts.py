@@ -15,15 +15,40 @@ from pathlib import Path
 import yaml
 
 
+def _validate_immutable_reference(filename, reference):
+    """Reject mutable remote actions and workflows; retain local action references."""
+    if reference is None:
+        return
+    if isinstance(reference, str) and reference.startswith("./"):
+        return
+    pattern = (
+        r"docker://[^@\s]+@sha256:[0-9a-f]{64}"
+        if isinstance(reference, str) and reference.startswith("docker://")
+        else r"[^@\s]+@[0-9a-f]{40}"
+    )
+    if not isinstance(reference, str) or not re.fullmatch(pattern, reference):
+        raise ValueError(f"{filename}: external uses must have an immutable SHA")
+
+
+def validate_immutable_actions(workflows):
+    """Require immutable external references even without a generator manifest."""
+    for filename, workflow in workflows.items():
+        for job in workflow.get("jobs", {}).values():
+            _validate_immutable_reference(filename, job.get("uses"))
+            for step in job.get("steps", []):
+                _validate_immutable_reference(filename, step.get("uses"))
+
+
 def validate_codeql(workflows):
-    """Every CodeQL job shares a single immutable action version."""
+    """All CodeQL analysis and SARIF upload jobs share an immutable version."""
+    repository_pins = set()
     for filename, workflow in workflows.items():
         for name, job in workflow.get("jobs", {}).items():
             pins = {
                 step["uses"].rsplit("@", 1)[-1]
                 for step in job.get("steps", [])
                 if re.match(
-                    r"github/codeql-action/(init|autobuild|analyze)@",
+                    r"github/codeql-action/(init|autobuild|analyze|upload-sarif)@",
                     step.get("uses", ""),
                 )
             }
@@ -33,6 +58,9 @@ def validate_codeql(workflows):
                 raise ValueError(
                     f"{filename}/{name}: CodeQL actions must share one full commit SHA"
                 )
+            repository_pins.update(pins)
+    if len(repository_pins) > 1:
+        raise ValueError("CodeQL actions across workflows must share one full commit SHA")
 
 
 def validate_graph(workflows, validators):
@@ -70,6 +98,7 @@ def validate(directory: Path) -> None:
         path.name: yaml.load(path.read_text(), Loader=yaml.BaseLoader)
         for path in (directory / ".github/workflows").glob("*.y*ml")
     }
+    validate_immutable_actions(workflows)
     validate_codeql(workflows)
     visited = validate_graph(workflows, policy["validation_workflows"])
     for filename, workflow in workflows.items():

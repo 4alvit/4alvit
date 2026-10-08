@@ -1,2 +1,5 @@
 commit.txt
 logs
+.venv/
+__pycache__/
+*.py[cod]
