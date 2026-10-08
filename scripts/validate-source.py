@@ -13,7 +13,8 @@ try:
     import yaml
 except ImportError as exc:
     raise SystemExit(
-        "Install the parser first: python3 -m pip install PyYAML==6.0.3"
+        "Install the parser first: python3 -m pip install --require-hashes "
+        "--only-binary=:all: -r .github/requirements-workflow-contracts.txt"
     ) from exc
 
 SUFFIXES = {".py", ".json", ".yaml", ".yml", ".sh", ".js", ".mjs", ".cjs"}
