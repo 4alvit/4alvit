@@ -106,13 +106,14 @@ has its own infrastructure project.
 
 The [IoT profile builder](https://github.com/4alvit/iot-project-builder-profile)
 generates a [public activity profile](https://4alvit.github.io/iot-project-builder-profile/).
-Its scores describe a scan, not current release readiness. The
-[HACS catalog fork](https://github.com/4alvit/default) is for catalog contributions.
+Its scores describe a scan, not current release readiness.
 
 Archived projects are retained as references:
 [dbus-evcharger](https://github.com/victron-venus/dbus-evcharger) points to
 `dbus-ev`, and [venus-os-governance](https://github.com/victron-venus/venus-os-governance)
-points to the safeguards in `inverter-control`.
+points to the safeguards in `inverter-control`. The archived
+[HACS catalog fork](https://github.com/4alvit/default) preserves the completed
+DESLOC integration and dashboard card submissions.
 
 <!-- ci-release-process:start -->
 ## CI and deployment
