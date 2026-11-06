@@ -16,5 +16,12 @@
     "Source syntax, workflow contracts and validator regressions only. No runtime testing of linked applications, browser playback, firmware or deployment checks implied."
   ],
   "visibility": "public",
-  "single_entry_ci": true
+  "single_entry_ci": true,
+  "change_scope": {
+    "documentation_paths": [],
+    "required_paths": [],
+    "always_validate_workflows": [
+      "codeql.yml"
+    ]
+  }
 }
